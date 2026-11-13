@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>About & Write Him — Elder Tyler Waters</title>
+<meta name="description" content="About Elder Tyler Waters, his mission in Natal, Brazil, the Portuguese he is learning, and how to send him a message.">
+<meta name="theme-color" content="#012169">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=Sora:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/style.css">
+<script>document.documentElement.className+=" js-motion";setTimeout(function(){if(!window.MOTION)document.documentElement.classList.remove("js-motion");},2500);</script>
+
+</head>
+<body>
+
+<header data-site-header></header>
+
+<section class="section section--tight">
+  <div class="wrap">
+    <p class="eyebrow">The short version</p>
+    <h1 data-title></h1>
+    <p class="lede" style="max-width:64ch" data-lede></p>
+  </div>
+</section>
+
+<section class="wrap">
+  <div class="grid fact-grid" data-facts></div>
+</section>
+
+<section class="section" id="write">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <p class="eyebrow">Write any time</p>
+        <h2>How to write him</h2>
+      </div>
+    </div>
+    <div class="grid grid-2" style="align-items:start">
+      <div class="card">
+        <h3>Email — the easy way</h3>
+        <p style="color:var(--ink-soft);font-size:.96rem">
+          Missionaries get one preparation day a week, and that is when they read and answer
+          email. Write any day you like; he will see it on his next P-day.
+        </p>
+        <p><a class="btn btn--sm" data-mailto>Email him</a></p>
+        <p class="muted" style="font-size:.88rem;margin:0" data-email></p>
+      </div>
+      <div class="card">
+        <h3>Letters and packages</h3>
+        <p style="color:var(--ink-soft);font-size:.96rem">
+          Physical mail goes to the mission office, and they pass it along at transfers or zone
+          conferences, so give it a few weeks. Packages sent abroad can be slow and may be charged
+          import fees — small, flat, and cheap travels best.
+        </p>
+        <address style="font-style:normal;font-size:.95rem;line-height:1.7" data-address></address>
+      </div>
+    </div>
+    <div class="note" style="margin-top:22px">
+      <strong>A few tips.</strong> Keep it upbeat and newsy — he only gets a few hours to read and
+      reply. Tell him what is happening at home, ask about the people he is teaching, and send
+      pictures. Do not be discouraged if the reply is short; P-day time goes fast.
+    </div>
+  </div>
+</section>
+
+<section class="section section--alt" id="tagalog">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <p class="eyebrow" data-lang-eyebrow></p>
+        <h2>Portuguese glossary</h2>
+      </div>
+      <span class="muted" style="font-size:.9rem" data-word-count></span>
+    </div>
+    <p class="lede" style="max-width:60ch;margin-bottom:28px">
+      Every word on this list came out of one of his emails. It grows each week.
+    </p>
+    <div class="word-list word-list--boxed" data-words style="grid-template-columns:repeat(auto-fit,minmax(280px,1fr));display:grid"></div>
+  </div>
+</section>
+
+<section class="section section--tight">
+  <div class="wrap">
+    <a class="card mission-link reveal" href="mission.html">
+      <span>
+        <span class="stat__label">The mission</span>
+        <strong>The boundary map, the mission president, and how a mission works</strong>
+      </span>
+      <span class="mission-link__arrow" aria-hidden="true">&rarr;</span>
+    </a>
+  </div>
+</section>
+
+<footer data-site-footer></footer>
+
+<script src="data/mission.js"></script>
+<script src="data/letters.js"></script>
+<script src="data/photos.js"></script>
+<script src="assets/js/site.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  var M = MW.M, st = MW.status(), esc = MW.esc;
+
+  document.querySelector("[data-title]").textContent = M.missionary.fullName;
+  document.querySelector("[data-lede]").textContent =
+    M.missionary.firstName + " is serving in the " + M.mission.name + ", speaking " + M.mission.language +
+    ". He entered the " + ((M.areas[0] && M.areas[0].type === "mtc") ? M.areas[0].name : "MTC") +
+    " on " + MW.fmtDate(M.dates.mtcStart) +
+    " and is expected home " + MW.fmtDate(M.dates.release) + ".";
+
+  var facts = [
+    { k: "Mission", v: M.mission.name, href: "mission.html" },
+    { k: "Language", v: M.mission.languageNative || M.mission.language },
+    { k: "Entered the MTC", v: MW.fmtDate(M.dates.mtcStart) },
+    { k: "Expected home", v: MW.fmtDate(M.dates.release) },
+    { k: "Currently", v: st.area ? st.area.name + " — " + st.area.region : "—" },
+    { k: "Companion", v: (st.area && st.area.companion) || "To be announced" }
+  ];
+  if (M.missionary.homeWard) facts.splice(4, 0, { k: "Home ward", v: M.missionary.homeWard });
+
+  document.querySelector("[data-facts]").innerHTML = facts.map(function (f) {
+    return '<div class="card reveal" style="padding:22px 24px">' +
+      '<div class="stat__label" style="margin:0 0 8px">' + esc(f.k) + '</div>' +
+      '<div style="font-family:var(--serif);font-size:1.12rem;color:var(--navy-deep);line-height:1.35">' +
+      (f.href ? '<a href="' + f.href + '">' + esc(f.v) + '</a>' : esc(f.v)) + '</div></div>';
+  }).join("");
+
+  var mailto = document.querySelector("[data-mailto]");
+  mailto.href = "mailto:" + M.missionary.email +
+    "?subject=" + encodeURIComponent("Hello from home!");
+  mailto.textContent = "Email " + M.missionary.title + " " + M.missionary.lastName;
+  document.querySelector("[data-email]").textContent = M.missionary.email;
+
+  document.querySelector("[data-address]").innerHTML =
+    M.mission.officeAddress.map(esc).join("<br>");
+
+  document.querySelector("[data-lang-eyebrow]").textContent = "Words from " + M.missionary.firstName;
+  var words = MW.allTagalog();
+  document.querySelector("[data-word-count]").textContent =
+    words.length + " word" + (words.length === 1 ? "" : "s") + " so far";
+  document.querySelector("[data-words]").innerHTML = words.length
+    ? words.map(function (w) {
+        return '<div class="word"><span class="word__term">' + esc(w.word) + '</span>' +
+               '<span class="word__def">' + esc(w.meaning) + '</span></div>';
+      }).join("")
+    : '<p class="muted">He has not taught us any yet.</p>';
+});
+</script>
+<script src="assets/js/motion.js"></script>
+</body>
+</html>
